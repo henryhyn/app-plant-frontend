@@ -5,6 +5,12 @@ const config = {
 
   output: {
     filename: 'app.js'
+  },
+
+  resolve: {
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js'
+    }
   }
 }
 
