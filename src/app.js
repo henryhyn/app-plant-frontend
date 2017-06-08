@@ -6,7 +6,8 @@ import router from '@/router'
 const isDevMode = process.env.NODE_ENV !== 'production'
 Vue.config.devtools = isDevMode
 
-var app = new Vue({
+/* eslint-disable no-new */
+new Vue({
   el: '#app',
   router,
   template: '<layout/>',
