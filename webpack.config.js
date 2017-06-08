@@ -4,7 +4,7 @@ const config = {
   },
 
   output: {
-    filename: 'app.js'
+    filename: 'dist/app.js'
   },
 
   resolve: {
