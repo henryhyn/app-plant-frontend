@@ -1,8 +1,7 @@
-<template>
-  <div id="app">
-    <h2>{{ message }}</h2>
-    <img src="../assets/logo.png">
-  </div>
+<template lang='jade'>
+  #app
+    h2{{ message }}
+    img(src='../assets/logo.png')
 </template>
 
 <script>
