@@ -17,4 +17,10 @@ config.plugins.push(
   })
 )
 
+config.plugins.push(
+  new webpack.LoaderOptionsPlugin({
+    minimize: true
+  })
+)
+
 module.exports = config
