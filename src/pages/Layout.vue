@@ -19,7 +19,11 @@
     -moz-osx-font-smoothing: grayscale;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 
     > header {
       height: 60px;
@@ -37,6 +41,7 @@
       > article {
         flex: 1;
         background-color: lightgray;
+        overflow-y: scroll;
 
         > section {
           background-color: white;
