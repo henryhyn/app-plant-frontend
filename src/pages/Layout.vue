@@ -1,25 +1,4 @@
 <template lang='jade'>
   #app
-    h2{{ message }}
-    img(src='../assets/logo.png')
+    router-view
 </template>
-
-<script>
-  export default {
-    data () {
-      return {
-        message: 'Hello Vue!'
-      }
-    }
-  }
-</script>
-
-<style lang='less' scoped>
-  h2 {
-    background-color: red;
-
-    &:before {
-      content: '§1.2 '
-    }
-  }
-</style>
