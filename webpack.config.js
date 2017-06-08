@@ -35,6 +35,9 @@ const config = {
     }, {
       test: /\.js$/,
       loader: 'babel-loader'
+    }, {
+      test: /\.(png|jpg|gif|svg)$/,
+      loader: 'file-loader'
     }]
   },
 

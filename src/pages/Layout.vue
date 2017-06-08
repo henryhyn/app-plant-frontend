@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <h2>{{ message }}</h2>
+    <img src="../assets/logo.png">
   </div>
 </template>
 
