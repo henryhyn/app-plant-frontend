@@ -4,6 +4,7 @@ const ROOT_PATH = path.resolve(__dirname);
 const SRC_PATH = path.resolve(ROOT_PATH, 'src');
 const DIST_PATH = path.resolve(ROOT_PATH, 'dist');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const config = {
   entry: {
@@ -45,12 +46,18 @@ const config = {
       exclude: /node_modules/,
       loader: 'babel-loader'
     }, {
+      test: /\.css$/,
+      use: ExtractTextPlugin.extract({
+        use: 'css-loader'
+      })
+    },{
       test: /\.(png|jpg|gif|svg)$/,
       loader: 'url-loader?limit=10000'
     }]
   },
 
   plugins: [
+    new ExtractTextPlugin('[name].css'),
     new HtmlWebpackPlugin({
       template: 'index.html',
       chunks: ['app'],
