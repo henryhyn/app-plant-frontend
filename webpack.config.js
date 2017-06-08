@@ -16,10 +16,21 @@ const config = {
   },
 
   resolve: {
+    extensions: ['.js', '.vue'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': SRC_PATH
     }
+  },
+
+  module: {
+    rules: [{
+      test: /\.vue$/,
+      loader: 'vue-loader'
+    }, {
+      test: /\.js$/,
+      loader: 'babel-loader'
+    }]
   },
 
   plugins: [
