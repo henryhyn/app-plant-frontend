@@ -13,3 +13,13 @@
     }
   }
 </script>
+
+<style lang='less' scoped>
+  h2 {
+    background-color: red;
+
+    &:before {
+      content: '§1.2 '
+    }
+  }
+</style>
