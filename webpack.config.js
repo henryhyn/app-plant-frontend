@@ -45,7 +45,7 @@ const config = {
     rules: [{
       enforce: 'pre',
       test: /\.(js|vue)$/,
-      exclude: /node_modules/,
+      include: SRC_PATH,
       use: {
         loader: 'eslint-loader',
         options: {
@@ -62,7 +62,7 @@ const config = {
       }
     }, {
       test: /\.js$/,
-      exclude: /node_modules/,
+      include: SRC_PATH,
       loader: 'babel-loader'
     }, {
       test: /\.css$/,
