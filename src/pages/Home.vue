@@ -16,12 +16,42 @@
 
     h4 循环
     ol: li(v-for='todo in todos') {{ todo.text }}
+
+    h4 处理用户输入
+    input(v-model='msg')
+    button(v-on:click='reverseMessage') 逆转消息
+    button(@click='reverseMessage') 逆转消息
+
+    h4 组件化应用构建
+    card
+    ol: todo-item(:todo='item' v-for='item in todos' key='item')
+
+    h4 动态加载数据
+    ol: li(v-for='item in list')
+      router-link(:to='`/plants/${item.id}`') {{ item.name }}
+
 </template>
 
 <script>
+  import Card from '@/components/Card'
+  import TodoItem from '@/components/TodoItem'
+  import Hex from '@/utils/Hex'
+
   export default {
+    methods: {
+      reverseMessage: function () {
+        this.msg = this.msg.split('').reverse().join('')
+      }
+    },
+    components: { Card, TodoItem },
+    created () {
+      Hex.get('/api/plants', {page: 2}, d => {
+        this.list = d.list
+      })
+    },
     data () {
       return {
+        list: [],
         seen: true,
         todos: [
           { text: '学习 JavaScript' },

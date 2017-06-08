@@ -25,7 +25,16 @@ const config = {
   },
   devServer: {
     historyApiFallback: true,
-    noInfo: true
+    noInfo: true,
+    hot: true,
+    inline: true,
+    compress: true,
+    proxy: {
+      '/api/*': {
+        target: 'http://localhost:8081',
+        secure: false
+      }
+    }
   },
   performance: {
     hints: false
