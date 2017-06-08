@@ -73,8 +73,11 @@ const config = {
       test: /\.less$/,
       use: ExtractTextPlugin.extract({ use: 'css-loader!postcss-loader!less-loader' })
     }, {
+      test: /\.(ttf|woff)$/,
+      loader: 'url-loader?limit=20000'
+    }, {
       test: /\.(png|jpg|gif|svg)$/,
-      loader: 'url-loader?limit=10000'
+      loader: 'url-loader?limit=20000'
     }]
   },
 
