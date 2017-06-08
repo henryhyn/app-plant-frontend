@@ -38,7 +38,7 @@ const config = {
       loader: 'vue-loader',
       options: {
         loaders: {
-          less: 'vue-style-loader!css-loader!less-loader'
+          less: ExtractTextPlugin.extract({ fallback: 'vue-style-loader', use: 'css-loader!less-loader' })
         }
       }
     }, {
@@ -47,10 +47,8 @@ const config = {
       loader: 'babel-loader'
     }, {
       test: /\.css$/,
-      use: ExtractTextPlugin.extract({
-        use: 'css-loader'
-      })
-    },{
+      use: ExtractTextPlugin.extract({ use: 'css-loader' })
+    }, {
       test: /\.(png|jpg|gif|svg)$/,
       loader: 'url-loader?limit=10000'
     }]
