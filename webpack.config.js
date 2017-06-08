@@ -7,12 +7,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const config = {
+  // 项目入口. 可以直接用文件夹名称, 默认会找 index.js; 也可以确定是哪个文件名字
   entry: {
     app: '@/app.js'
   },
-
+  // 项目出口. 让 webpack 把处理完成的文件放在哪里
   output: {
     path: DIST_PATH,
+    libraryTarget: 'umd',
     filename: '[name].js'
   },
 
@@ -40,7 +42,7 @@ const config = {
     hints: false
   },
   devtool: '#source-map',
-
+  // 模块. 要用什么不同的模块来处理各种类型的文件
   module: {
     rules: [{
       enforce: 'pre',
@@ -78,6 +80,7 @@ const config = {
 
   plugins: [
     new ExtractTextPlugin('[name].css'),
+    // 添加我们的插件会自动生成一个 html 文件
     new HtmlWebpackPlugin({
       template: 'index.html',
       chunks: ['app'],
