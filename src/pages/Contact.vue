@@ -1,4 +1,4 @@
-<template lang="jade">
+<template lang="pug">
   section
     h2 联系我们
     ul
