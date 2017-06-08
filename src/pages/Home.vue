@@ -1,24 +1,21 @@
 <template lang="jade">
-  section#home
-    h2 {{ message }}
+  section
+    h2 首页
+
+    h4 文中插值
+    p 欢迎 {{ msg }}!
+    p
+      | 也可以这样绑定
+      span(v-text='msg')
 </template>
 
 <script>
   export default {
     data () {
       return {
+        msg: 'Henry',
         message: 'Hello Vue!'
       }
     }
   }
 </script>
-
-<style lang='less' scoped>
-  h2 {
-    background-color: red;
-
-    &:before {
-      content: '§1.2 '
-    }
-  }
-</style>

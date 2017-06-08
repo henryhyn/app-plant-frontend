@@ -1,26 +1,22 @@
 <template lang="jade">
   #app
     header
-      #logo
-        img(src='../assets/logo.png')
+      #logo: img(src='../assets/logo.png')
       #project-name 项目名称
     #main-body
-      aside
-        ul
-          li
-            router-link(to='/') 首页
-          li
-            router-link(to='/about') 关于
-          li
-            router-link(to='/contact') 联系
-          li
-            router-link(to='/help') 帮助
-      article
-        router-view
+      aside: nav: ul
+        li: router-link(to='/') 首页
+        li: router-link(to='/about') 关于
+        li: router-link(to='/contact') 联系
+        li: router-link(to='/help') 帮助
+      article: router-view
 </template>
 
 <style lang="less">
   #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
