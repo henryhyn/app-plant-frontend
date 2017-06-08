@@ -1,7 +1,6 @@
 <template lang="jade">
   section#home
     h2 {{ message }}
-    img(src='../assets/logo.png')
 </template>
 
 <script>

@@ -59,6 +59,9 @@ const config = {
       test: /\.css$/,
       use: ExtractTextPlugin.extract({ use: 'css-loader' })
     }, {
+      test: /\.less$/,
+      use: ExtractTextPlugin.extract({ use: 'css-loader!less-loader' })
+    }, {
       test: /\.(png|jpg|gif|svg)$/,
       loader: 'url-loader?limit=10000'
     }]

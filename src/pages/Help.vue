@@ -3,7 +3,7 @@
     h2 获取帮助
 
     h3 基础
-    ul
+    ul.list-inline
       li
         a(href='https://vuejs.org' target='_blank') Core Docs
       li
@@ -12,9 +12,11 @@
         a(href='https://gitter.im/vuejs/vue' target='_blank') Gitter Chat
       li
         a(href='https://twitter.com/vuejs' target='_blank') Twitter
+      li
+        a(href='http://vuejs-templates.github.io/webpack/' target='_blank') Docs for This Template
 
     h3 生态
-    ul
+    ul.list-inline
       li
         a(href='http://router.vuejs.org' target='_blank') vue-router
       li

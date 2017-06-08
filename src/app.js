@@ -1,4 +1,5 @@
 import 'normalize.css'
+import '@/style/main.less'
 import Vue from 'vue'
 import Layout from '@/pages/Layout'
 import router from '@/router'

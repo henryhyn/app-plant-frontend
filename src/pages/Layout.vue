@@ -1,6 +1,9 @@
 <template lang="jade">
   #app
     header
+      #logo
+        img(src='../assets/logo.png')
+      #project-name 项目名称
     #main-body
       aside
         ul
@@ -45,6 +48,24 @@
           padding: 8px;
         }
       }
+    }
+  }
+
+  header {
+    display: flex;
+    > #logo {
+      height: 60px;
+      display: inline-block;
+      margin-right: 8px;
+      > img {
+        height: 60px;
+      }
+    }
+
+    > #project-name {
+      height: 60px;
+      line-height: 60px;
+      display: inline-block;
     }
   }
 </style>
