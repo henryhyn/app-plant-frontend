@@ -9,7 +9,8 @@
         li: router-link(to='/about') 关于
         li: router-link(to='/contact') 联系
         li: router-link(to='/help') 帮助
-      article: router-view
+      article: transition(name='fade' mode='out-in')
+        router-view
 </template>
 
 <style lang="less">
@@ -65,5 +66,12 @@
       line-height: 60px;
       display: inline-block;
     }
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: all .2s ease;
+  }
+  .fade-enter, .fade-leave-active {
+    opacity: 0;
   }
 </style>
