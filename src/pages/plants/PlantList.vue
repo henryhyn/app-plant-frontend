@@ -1,12 +1,14 @@
 <template lang="pug">
   section
     h2 植物列表
-    ol: li(v-for='item in list')
-      router-link(:to='`/plants/${item.id}`') {{ item.name }}
+    el-row(:gutter='16')
+      el-col.vskip(:span='6' :key='item.id' v-for='item in list')
+        plant-card(:data='item')
 </template>
 
 <script>
   import Hex from '@/utils/Hex'
+  import PlantCard from '@/pages/plants/PlantCard'
 
   export default {
     data () {
@@ -15,8 +17,10 @@
       }
     },
 
+    components: { PlantCard },
+
     created () {
-      Hex.get('/api/plants', {page: 2}, d => {
+      Hex.get('/api/plants', {page: 1}, d => {
         this.list = d.list
       })
     }

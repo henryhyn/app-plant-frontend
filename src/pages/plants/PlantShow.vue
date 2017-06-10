@@ -21,7 +21,7 @@
     created () {
       const url = '/api/plants/' + this.$route.params.id
       Hex.get(url, d => {
-        this.tags = (d.tags || '').split(',').filter(Hex.validAny)
+        this.tags = (d.tags || '').split(',').filter(Hex.validString)
         this.plant = d
       })
     }

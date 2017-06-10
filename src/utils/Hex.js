@@ -27,5 +27,6 @@ Hex.get = (url, params, cb) => {
 }
 
 Hex.validAny = any => any !== null && any !== undefined
+Hex.validString = any => any !== null && any !== undefined && any.length > 0
 
 export default Hex
