@@ -1,0 +1,26 @@
+.hui-content {
+  p {
+    text-align: justify;
+  }
+
+  h2 {
+    counter-increment: section;
+    counter-reset: subsection;
+  }
+  h2:before {
+    content: "§"counter(section)" ";
+  }
+  h3 {
+    counter-increment: subsection;
+    counter-reset: subsubsection;
+  }
+  h3:before {
+    content: counter(section)"."counter(subsection)" ";
+  }
+  h4 {
+    counter-increment: subsubsection;
+  }
+  h4:before {
+    content: counter(section)"."counter(subsection)"."counter(subsubsection)" ";
+  }
+}

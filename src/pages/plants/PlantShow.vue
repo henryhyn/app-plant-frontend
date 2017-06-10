@@ -2,7 +2,7 @@
   section
     h2 {{ plant.name }}
 
-    div(v-html='plant.content')
+    .hui-content(v-html='plant.content')
 </template>
 
 <script>
