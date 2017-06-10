@@ -4,14 +4,18 @@
       #logo: img(src='../assets/logo.png')
       #project-name 项目名称
     #main-body
-      aside: nav: ul
-        li: router-link(to='/') 首页
-        li: router-link(to='/about') 关于
-        li: router-link(to='/contact') 联系
-        li: router-link(to='/help') 帮助
+      sider
       article: transition(name='fade' mode='out-in')
         router-view
 </template>
+
+<script>
+  import Sider from '@/pages/Sider'
+
+  export default {
+    components: { Sider }
+  }
+</script>
 
 <style lang="less">
   #app {
@@ -33,7 +37,6 @@
 
       > aside {
         width: 200px;
-        background-color: gray;
       }
 
       > article {
