@@ -13,9 +13,11 @@
 
 <style lang="less" scoped>
   .card {
+    width: 250px;
+
     img {
-      width: 281px;
-      height: 173px;
+      width: 250px;
+      height: 154px;
     }
 
     .card-body {

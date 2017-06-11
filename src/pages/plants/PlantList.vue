@@ -1,8 +1,8 @@
 <template lang="pug">
   section
     h2 植物列表
-    el-row(:gutter='16')
-      el-col.vskip(:span='6' :key='item.id' v-for='item in list')
+    el-row
+      el-col.vskipp(:xs='24' :sm='12' :md='8' :lg='6' :key='item.id' v-for='item in list')
         plant-card(:data='item')
 </template>
 
