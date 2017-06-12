@@ -1,8 +1,12 @@
 <template lang="pug">
   el-card.card(:body-style='{padding: 0}')
-    img(:src='data.avatar')
+    router-link(:to='`/plants/${data.id}`')
+      img(:src='data.avatar')
     .card-body
-      router-link(:to='`/plants/${data.id}`') {{ data.name }}
+      h4 {{ data.name }}
+      footer
+        time.small.gray {{ hex.fromNow(data.createTime) }}
+        el-button.operation.pull-right(type='text') 编辑
 </template>
 
 <script>
@@ -21,7 +25,11 @@
     }
 
     .card-body {
-      padding: 16px;
+      padding: 10px;
     }
+  }
+
+  .operation {
+    padding: 3px;
   }
 </style>
