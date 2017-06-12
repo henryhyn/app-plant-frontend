@@ -8,13 +8,14 @@
         time.small.gray {{ hex.fromNow(data.createTime) }}
         plant-modal(title='编辑植物' :data='data' :onSubmit='onEdit')
           el-button.operation(type='text') 编辑
+        el-button.operation(type='text' @click='onDelete(data.id)') 删除
 </template>
 
 <script>
   import PlantModal from '@/pages/plants/PlantModal'
 
   export default {
-    props: ['data', 'onEdit'],
+    props: ['data', 'onEdit', 'onDelete'],
 
     components: { PlantModal }
   }
