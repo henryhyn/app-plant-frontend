@@ -6,12 +6,17 @@
       h4 {{ data.name }}
       footer
         time.small.gray {{ hex.fromNow(data.createTime) }}
-        el-button.operation.pull-right(type='text') 编辑
+        plant-modal(title='编辑植物' :data='data' :onSubmit='onEdit')
+          el-button.operation(type='text') 编辑
 </template>
 
 <script>
+  import PlantModal from '@/pages/plants/PlantModal'
+
   export default {
-    props: ['data']
+    props: ['data', 'onEdit'],
+
+    components: { PlantModal }
   }
 </script>
 
