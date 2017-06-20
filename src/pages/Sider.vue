@@ -3,8 +3,8 @@
     nav: el-menu(:router='true' :unique-opened='true' theme='dark')
       el-menu-item(index='/') <i class='el-icon-date'></i> 首页
       el-submenu(index='dishes')
-        template(slot='title') <i class='el-icon-menu'></i> 资源管理
-        el-menu-item(index='/plants') <i class='el-icon-message'></i> 植物列表
+        template(slot='title') <i class='el-icon-menu'></i> 推荐菜
+        el-menu-item(index='/redishes') <i class='el-icon-message'></i> 商户推荐菜
       el-submenu(index='commons')
         template(slot='title') <i class='el-icon-setting'></i> 常规信息
         el-menu-item(index='/about') <i class='el-icon-message'></i> 关于

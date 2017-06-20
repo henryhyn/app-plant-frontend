@@ -9,7 +9,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const config = {
   // 项目入口. 可以直接用文件夹名称, 默认会找 index.js; 也可以确定是哪个文件名字
   entry: {
-    app: '@/app.js'
+    adminvue: '@/app.js'
   },
   // 项目出口. 让 webpack 把处理完成的文件放在哪里
   output: {
@@ -33,7 +33,7 @@ const config = {
     compress: true,
     proxy: {
       '/api/*': {
-        target: 'http://localhost:8081',
+        target: 'http://localhost:8080',
         secure: false
       }
     }
@@ -86,7 +86,7 @@ const config = {
     // 添加我们的插件会自动生成一个 html 文件
     new HtmlWebpackPlugin({
       template: 'index.html',
-      chunks: ['app'],
+      chunks: ['adminvue'],
       title: '第一个 Vue 应用'
     })
   ]

@@ -6,6 +6,7 @@ import Contact from '@/pages/Contact'
 import Help from '@/pages/Help'
 import PlantList from '@/pages/plants/PlantList'
 import PlantShow from '@/pages/plants/PlantShow'
+import ReDishList from '@/pages/redishes/ReDishList'
 
 Vue.use(Router)
 
@@ -26,6 +27,10 @@ export default new Router({
     path: '/help',
     name: 'Help',
     component: Help
+  }, {
+    path: '/redishes/:shopId',
+    name: 'ReDishList',
+    component: ReDishList
   }, {
     path: '/plants',
     name: 'PlantList',
