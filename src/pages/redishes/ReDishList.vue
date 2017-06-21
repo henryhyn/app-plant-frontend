@@ -1,18 +1,29 @@
 <template lang="pug">
   section
-    h2 商户推荐菜
-    el-button(@click='batchHideHandler' type='danger') 批量下线
-    el-button(@click='mergeHandler' type='danger') 在线合并
+    el-row.vskipp(:gutter=16)
+      el-col(:span='9')
+        shop-banner(:data='shop')
+      el-col(:span='3')
+        el-card.hui-count(:body-style='{"text-align": "center"}')
+          p.huge <strong>{{dishCount}}</strong> 道
+          p 推荐菜
+    .vskip
+      el-button(@click='batchHideHandler' type='danger') 批量下线
+      el-button(@click='mergeHandler' type='danger') 在线合并
+      .pull-right
+        el-input(v-model='keyword' placeholder='推荐菜名字')
     el-row
-      el-col.vskipp(:xs='24' :sm='12' :md='8' :lg='6' :key='item.id' v-for='item in list')
+      el-col.vskipp(:xs='24' :sm='12' :md='8' :lg='6' :key='item.id' v-for='item in filtByKeyword')
         dish-card(:data='item')
     el-dialog(title='批量下线' :visible.sync='batchHideVisible')
-      ol: li(v-for='todo in op_list') {{ todo.dishName }}
+      ol: li(v-for='item in op_list') {{ item.dishName }}
       div(slot='footer')
         el-button(@click='batchHideVisible=false') 取消
         el-button(@click='batchHide' type='primary') 确定
     el-dialog(title='在线合并' :visible.sync='mergeVisible')
-      el-radio(v-model='masterDishId' v-for='todo in op_list' key='todo.id' :label='todo.id') {{ todo.dishName }}
+      p.gray 请选择主菜品:
+      ul.list-unstyled: li(v-for='item in op_list')
+        el-radio(v-model='masterDishId' :label='item.id') {{ item.dishName }} ({{item.recommendCount}}人推荐 ￥{{item.price}})
       div(slot='footer')
         el-button(@click='mergeVisible=false') 取消
         el-button(@click='merge' type='primary') 确定
@@ -21,11 +32,15 @@
 <script>
   import Hex from '@/utils/Hex'
   import DishCard from '@/pages/dishes/DishCard'
+  import ShopBanner from '@/pages/shops/ShopBanner'
 
   export default {
     data () {
       return {
         userName: localStorage.getItem('nlpMis'),
+        shop: {},
+        dishCount: 0,
+        keyword: null,
         masterDishId: null,
         batchHideVisible: false,
         mergeVisible: false,
@@ -34,7 +49,16 @@
       }
     },
 
-    components: { DishCard },
+    components: { DishCard, ShopBanner },
+
+    computed: {
+      filtByKeyword () {
+        if (!Hex.validString(this.keyword)) {
+          return this.list
+        }
+        return this.list.filter(i => i.dishName.indexOf(this.keyword) >= 0)
+      }
+    },
 
     methods: {
       loadDataFromServer () {
@@ -44,6 +68,20 @@
             i.checked = false
             return i
           })
+        })
+      },
+
+      loadShopFromServer () {
+        const url = '/api/shops/' + this.$route.params.shopId
+        Hex.get(url, d => {
+          this.shop = d
+        })
+      },
+
+      loadDishCountFromServer () {
+        const url = '/api/admin/getDishCountByShopId/' + this.$route.params.shopId
+        Hex.get(url, d => {
+          this.dishCount = d
         })
       },
 
@@ -60,6 +98,7 @@
         const userName = this.userName
         Hex.post('/api/admin/merge', {dishDTOs, userName, masterDishId, shopId: this.$route.params.shopId, method: 'merge'}, d => {
           this.loadDataFromServer()
+          this.loadDishCountFromServer()
           this.mergeVisible = false
         })
       },
@@ -77,6 +116,7 @@
         const userName = this.userName
         Hex.post('/api/admin/batchHideDish', {dishDTOs, userName, method: 'batchHide'}, d => {
           this.loadDataFromServer()
+          this.loadDishCountFromServer()
           this.batchHideVisible = false
         })
       },
@@ -89,6 +129,19 @@
 
     created () {
       this.loadDataFromServer()
+      this.loadShopFromServer()
+      this.loadDishCountFromServer()
     }
   }
 </script>
+
+<style lang="less">
+  .hui-count {
+    height: 129px;
+
+    .huge {
+      font-size: 24px;
+      margin: 16px;
+    }
+  }
+</style>

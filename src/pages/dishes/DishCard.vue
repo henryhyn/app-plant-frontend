@@ -4,9 +4,14 @@
       img(:src='data.picUrl')
     .card-body
       h4 {{ data.dishName }}
-      footer
-        el-checkbox(v-model='data.checked')
-        span 推荐次数: {{data.recommendCount}}
+      ul.list-inline.small.gray
+        li: el-checkbox(v-model='data.checked')
+        li {{data.dishType}}
+        li {{data.recommendCount}}人推荐
+        li ￥{{data.price}}
+      ul.list-inline.small.gray
+        li 创建: {{ hex.fromNow(data.addTime) }}
+        li 修改: {{ hex.fromNow(data.modifyTime) }}
 </template>
 
 <script>
