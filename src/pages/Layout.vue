@@ -2,7 +2,10 @@
   #app
     header
       #logo: img(src='../assets/logo.png')
-      #project-name 项目名称
+      #project-name 丰富化信息
+      .fill
+      #user-name {{ userName }}
+      a#logout(href='/logout') 登出
     #main-body
       sider
       article: transition(name='fade' mode='out-in')
@@ -13,6 +16,12 @@
   import Sider from '@/pages/Sider'
 
   export default {
+    data () {
+      return {
+        userName: localStorage.getItem('nlpName')
+      }
+    },
+
     components: { Sider }
   }
 </script>
@@ -64,7 +73,13 @@
       }
     }
 
-    > #project-name {
+    .fill {
+      flex: 1;
+    }
+
+    > #project-name, > #user-name, > #logout {
+      margin-left: 16px;
+      margin-right: 16px;
       height: 60px;
       line-height: 60px;
       display: inline-block;
