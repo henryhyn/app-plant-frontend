@@ -141,7 +141,7 @@
 
     .huge {
       font-size: 24px;
-      margin: 16px;
+      margin: 8px;
     }
   }
 </style>

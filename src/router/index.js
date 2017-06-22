@@ -7,6 +7,7 @@ import Help from '@/pages/Help'
 import PlantList from '@/pages/plants/PlantList'
 import PlantShow from '@/pages/plants/PlantShow'
 import ReDishList from '@/pages/redishes/ReDishList'
+import ReDishShow from '@/pages/redishes/ReDishShow'
 
 Vue.use(Router)
 
@@ -31,6 +32,10 @@ export default new Router({
     path: '/redishes/:shopId',
     name: 'ReDishList',
     component: ReDishList
+  }, {
+    path: '/redishes/dishes/:dishId',
+    name: 'ReDishShow',
+    component: ReDishShow
   }, {
     path: '/plants',
     name: 'PlantList',
