@@ -7,7 +7,7 @@
       ul.list-inline.small.gray
         li {{data.dishType}}
         li {{data.recommendCount}}人推荐
-        li(v-if='hex.validNumber(data.childCount)') {{data.childCount}} 子菜品
+        li(v-if='hex.validNumber(data.childCount) && data.childCount>1') {{data.childCount}} 子菜品
         li(v-if='hex.validNumber(data.price)') ￥{{data.price}}
       ul.list-inline.small.gray
         li 创建: {{ hex.fromNow(data.addTime) }}

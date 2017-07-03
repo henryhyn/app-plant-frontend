@@ -78,6 +78,9 @@
       },
 
       handleClick (item) {
+        if (!Hex.validNumber(item.childCount) || item.childCount <= 1) {
+          return
+        }
         this.loadChildDishFromServer(item.id)
         this.masterDish = item
         this.splitVisible = true
