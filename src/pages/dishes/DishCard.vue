@@ -3,9 +3,8 @@
     router-link(:to='`/redishes/dishes/${data.id}`')
       img(:src='data.picUrl')
     .card-body
-      h4 {{ data.dishName }}
+      h4 <el-checkbox v-model='data.checked'></el-checkbox> {{ data.dishName }}
       ul.list-inline.small.gray
-        li: el-checkbox(v-model='data.checked')
         li {{data.dishType}}
         li {{data.recommendCount}}人推荐
         li(v-if='hex.validNumber(data.childCount)') {{data.childCount}} 子菜品

@@ -23,7 +23,7 @@
     el-dialog(title='在线合并' :visible.sync='mergeVisible')
       p.gray 请选择主菜品:
       ul.list-unstyled: li(v-for='item in op_list')
-        el-radio(v-model='masterDishId' :label='item.id') {{ item.dishName }} ({{item.recommendCount}}人推荐 ￥{{item.price}})
+        el-radio(v-model='masterDishId' :label='item.id') {{ item.dishName }} ({{item.recommendCount}}人推荐 <span v-if='hex.validNumber(item.price)'>￥{{item.price}}</span>)
       div(slot='footer')
         el-button(@click='mergeVisible=false') 取消
         el-button(@click='merge' type='primary') 确定
