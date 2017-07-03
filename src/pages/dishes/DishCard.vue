@@ -1,6 +1,6 @@
 <template lang="pug">
   el-card.card(:body-style='{padding: 0}')
-    router-link(:to='`/redishes/dishes/${data.id}`')
+    div(@click='onClick')
       img(:src='data.picUrl')
     .card-body
       h4 <el-checkbox v-model='data.checked'></el-checkbox> {{ data.dishName }}
@@ -16,7 +16,7 @@
 
 <script>
   export default {
-    props: ['data']
+    props: ['data', 'onClick']
   }
 </script>
 
