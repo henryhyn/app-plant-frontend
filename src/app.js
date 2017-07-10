@@ -18,6 +18,5 @@ Vue.config.devtools = isDevMode
 new Vue({
   el: '#app',
   router,
-  template: '<layout/>',
-  components: { Layout }
+  render: h => h(Layout)
 })

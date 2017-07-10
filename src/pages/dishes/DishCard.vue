@@ -5,9 +5,11 @@
     .card-body
       h4 <el-checkbox v-model='data.checked'></el-checkbox> {{ data.dishName }}
       ul.list-inline.small.gray
+        li ID: {{data.id}}
         li {{data.dishType}}
+      ul.list-inline.small.gray
         li {{data.recommendCount}}人推荐
-        li(v-if='hex.validNumber(data.childCount) && data.childCount>1') {{data.childCount}} 子菜品
+        li(v-if='hex.validNumber(data.childCount) && data.childCount>1') {{data.childCount-1}} 子菜品
         li(v-if='hex.validNumber(data.price)') ￥{{data.price}}
       ul.list-inline.small.gray
         li 创建: {{ hex.fromNow(data.addTime) }}
