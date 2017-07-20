@@ -8,6 +8,7 @@ import PlantList from '@/pages/plants/PlantList'
 import PlantShow from '@/pages/plants/PlantShow'
 import ReDishList from '@/pages/redishes/ReDishList'
 import ReDishShow from '@/pages/redishes/ReDishShow'
+import ArticleList from '@/pages/articles/ArticleList'
 
 Vue.use(Router)
 
@@ -44,5 +45,9 @@ export default new Router({
     path: '/plants/:id',
     name: 'PlantShow',
     component: PlantShow
+  }, {
+    path: '/articles',
+    name: 'ArticleList',
+    component: ArticleList
   }]
 })
