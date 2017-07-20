@@ -3,7 +3,7 @@
     div(@click='onClick')
       img(:src='data.picUrl')
     .card-body
-      h4 <el-checkbox v-model='data.checked'></el-checkbox> {{ data.dishName }}
+      h4 <el-checkbox v-model='data.checked'></el-checkbox> <el-badge :value='hex.toString(2+data.type,["下","子","正","认"])' class='item'>{{ data.dishName }}</el-badge>
       ul.list-inline.small.gray
         li ID: {{data.id}}
         li {{data.dishType}}

@@ -82,4 +82,6 @@ Hex.formatDate = date => Hex.validAny(date) ? moment(date, moment.x).format('YYY
 Hex.toMoment = date => Hex.validAny(date) ? moment(date, moment.x) : null
 Hex.fromNow = date => Hex.validAny(date) ? moment(date, moment.x).fromNow() : null
 
+Hex.toString = (idx, lst) => lst[idx]
+
 export default Hex

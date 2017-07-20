@@ -9,7 +9,15 @@
           p 推荐菜
     .vskip
       el-button(@click='batchHideHandler' type='danger') 批量下线
+      el-button(@click='batchVerifyHandler' type='danger') 批量恢复
       el-button(@click='mergeHandler' type='danger') 在线合并
+      span.hskip
+      el-button-group
+        el-button(:type="dishType===100 ? 'primary' : 'default'" @click='dishType=100') 全部
+        el-button(:type="dishType===0 ? 'primary' : 'default'" @click='dishType=0') 在线
+        el-button(:type="dishType===-1 ? 'primary' : 'default'" @click='dishType=-1') 子菜
+        el-button(:type="dishType===-2 ? 'primary' : 'default'" @click='dishType=-2') 下线
+        el-button(:type="dishType===1 ? 'primary' : 'default'" @click='dishType=1') 认证
       .pull-right
         el-input(v-model='keyword' placeholder='推荐菜名字')
     el-row
@@ -20,6 +28,11 @@
       div(slot='footer')
         el-button(@click='batchHideVisible=false') 取消
         el-button(@click='batchHide' type='primary') 确定
+    el-dialog(title='菜品认证' :visible.sync='batchVerifyVisible')
+      ol: li(v-for='item in opList') {{ item.dishName }}
+      div(slot='footer')
+        el-button(@click='batchVerifyVisible=false') 取消
+        el-button(@click='batchVerify' type='primary') 确定
     el-dialog(title='在线合并' :visible.sync='mergeVisible')
       p.gray 请选择主菜品:
       ul.list-unstyled: li(v-for='item in opList')
@@ -50,8 +63,10 @@
         shop: {},
         dishCount: 0,
         keyword: null,
+        dishType: 0,
         masterDishId: null,
         batchHideVisible: false,
+        batchVerifyVisible: false,
         mergeVisible: false,
         splitVisible: false,
         masterDish: {},
@@ -65,10 +80,14 @@
 
     computed: {
       filtByKeyword () {
-        if (!Hex.validString(this.keyword)) {
-          return this.list
+        const rs = this.list.filter(i => this.dishType === 100 || (this.dishType === 0 && i.type >= this.dishType) || i.type === this.dishType)
+        if (Hex.validString(this.keyword)) {
+          const res = rs.filter(i => i.dishName.indexOf(this.keyword) >= 0)
+          this.dishCount = res.length
+          return res
         }
-        return this.list.filter(i => i.dishName.indexOf(this.keyword) >= 0)
+        this.dishCount = rs.length
+        return rs
       }
     },
 
@@ -170,9 +189,27 @@
         })
       },
 
+      batchVerify () {
+        const dishDTOs = this.opList.map(i => {
+          const { id, dishName } = i
+          return { id, dishName }
+        })
+        const userName = this.userName
+        Hex.post('/api/admin/batchVerifyDish', {shopId: this.$route.params.shopId, dishDTOs, userName, method: 'batchVerify'}, d => {
+          this.loadDataFromServer()
+          this.loadDishCountFromServer()
+          this.batchVerifyVisible = false
+        })
+      },
+
       batchHideHandler () {
         this.opListFilter()
         this.batchHideVisible = true
+      },
+
+      batchVerifyHandler () {
+        this.opListFilter()
+        this.batchVerifyVisible = true
       }
     },
 
