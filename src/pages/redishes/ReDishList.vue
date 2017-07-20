@@ -146,13 +146,6 @@
         })
       },
 
-      loadDishCountFromServer () {
-        const url = '/api/admin/getDishCountByShopId/' + this.$route.params.shopId
-        Hex.get(url, d => {
-          this.dishCount = d
-        })
-      },
-
       opListFilter () {
         this.opList = this.list.filter(i => i.checked)
       },
@@ -166,7 +159,6 @@
         const userName = this.userName
         Hex.post('/api/admin/merge', {dishDTOs, userName, masterDishId, shopId: this.$route.params.shopId, method: 'merge'}, d => {
           this.loadDataFromServer()
-          this.loadDishCountFromServer()
           this.mergeVisible = false
         })
       },
@@ -184,7 +176,6 @@
         const userName = this.userName
         Hex.post('/api/admin/batchHideDish', {dishDTOs, userName, method: 'batchHide'}, d => {
           this.loadDataFromServer()
-          this.loadDishCountFromServer()
           this.batchHideVisible = false
         })
       },
@@ -197,7 +188,6 @@
         const userName = this.userName
         Hex.post('/api/admin/batchVerifyDish', {shopId: this.$route.params.shopId, dishDTOs, userName, method: 'batchVerify'}, d => {
           this.loadDataFromServer()
-          this.loadDishCountFromServer()
           this.batchVerifyVisible = false
         })
       },
@@ -216,7 +206,6 @@
     created () {
       this.loadDataFromServer()
       this.loadShopFromServer()
-      this.loadDishCountFromServer()
     }
   }
 </script>
