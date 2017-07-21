@@ -1,3 +1,12 @@
 <template lang="pug">
-  div ab
+  el-card
+    div(slot='header') {{data.title}}
+    div(v-html='data.htmlcontent')
+    router-link(:to='`/articles/${data.id}/edit`') 编辑
 </template>
+
+<script>
+  export default {
+    props: ['data', 'onClick']
+  }
+</script>

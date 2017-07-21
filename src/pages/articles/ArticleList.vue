@@ -1,6 +1,9 @@
 <template lang="pug">
   section
     h2 文章列表
+    router-link(to='/articles/new')
+      el-button(type='primary') 新建
+    .vskip
     el-row
       el-col.vskip(:key='item.id' v-for='item in list')
         article-card(:data='item')

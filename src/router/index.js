@@ -9,6 +9,7 @@ import PlantShow from '@/pages/plants/PlantShow'
 import ReDishList from '@/pages/redishes/ReDishList'
 import ReDishShow from '@/pages/redishes/ReDishShow'
 import ArticleList from '@/pages/articles/ArticleList'
+import ArticleForm from '@/pages/articles/ArticleForm'
 
 Vue.use(Router)
 
@@ -49,5 +50,13 @@ export default new Router({
     path: '/articles',
     name: 'ArticleList',
     component: ArticleList
+  }, {
+    path: '/articles/:articleId/edit',
+    name: 'ArticleFormEdit',
+    component: ArticleForm
+  }, {
+    path: '/articles/new',
+    name: 'ArticleFormNew',
+    component: ArticleForm
   }]
 })
