@@ -9,6 +9,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const config = {
   // 项目入口. 可以直接用文件夹名称, 默认会找 index.js; 也可以确定是哪个文件名字
   entry: {
+    blog: '@/blog.js',
     adminvue: '@/app.js'
   },
   // 项目出口. 让 webpack 把处理完成的文件放在哪里

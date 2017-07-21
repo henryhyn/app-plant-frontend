@@ -1,0 +1,63 @@
+.hui-wrapper {
+  max-width: 780px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.hui-md-output {
+  overflow: auto;
+  padding: 8px;
+
+  h1.hui-md-title {
+    text-align: center;
+  }
+
+  pre {
+    padding: 8px;
+    background-color: lightgrey;
+  }
+
+  p {
+    text-align: justify;
+  }
+
+  h2 {
+    counter-increment: section;
+    counter-reset: subsection;
+
+    &:before {
+      content: "§"counter(section)" ";
+    }
+  }
+
+  h3 {
+    counter-increment: subsection;
+    counter-reset: subsubsection;
+
+    &:before {
+      content: counter(section)"."counter(subsection)" ";
+    }
+  }
+
+  h4 {
+    counter-increment: subsubsection;
+
+    &:before {
+      content: counter(section)"."counter(subsection)"."counter(subsubsection)" ";
+    }
+  }
+}
+
+.hui-md-card {
+  margin: 8px;
+  padding: 8px;
+  border: 1px solid lightgrey;
+
+  .hui-md-body {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+  }
+}
