@@ -39,8 +39,8 @@
       loadDataFromServer () {
         const url = '/api/articles/' + this.$route.params.articleId
         Hex.get(url, d => {
-          this.title = d.data.title
-          this.input = d.data.mdContent
+          this.title = d.data.title || ''
+          this.input = d.data.mdContent || ''
         })
       },
 
@@ -73,14 +73,21 @@
 <style lang="less" scoped>
   .hui-md-editor {
     display: flex;
+    height: 500px;
 
-    .hui-md-input {
+    textarea.hui-md-input {
       flex: 1;
       margin-right: 16px;
+      border: none;
+      resize: none;
+      outline: none;
     }
 
     .hui-md-output {
       flex: 1;
+      background-color: lightgrey;
+      padding: 8px;
+      overflow-y: scroll;
     }
   }
 </style>
