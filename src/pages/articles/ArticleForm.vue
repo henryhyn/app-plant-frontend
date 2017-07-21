@@ -40,16 +40,16 @@
         const url = '/api/articles/' + this.$route.params.articleId
         Hex.get(url, d => {
           this.title = d.data.title
-          this.input = d.data.mdcontent
+          this.input = d.data.mdContent
         })
       },
 
       save () {
         const title = this.title
-        const mdcontent = this.input
-        const htmlcontent = this.compiledMarkdown
+        const mdContent = this.input
+        const htmlContent = this.compiledMarkdown
         const id = this.$route.params.articleId
-        const params = {title, mdcontent, htmlcontent}
+        const params = {title, mdContent, htmlContent}
         if (Hex.validNumber(id)) {
           const url = '/api/articles/' + id
           Hex.put(url, params, d => {
