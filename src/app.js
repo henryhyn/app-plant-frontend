@@ -6,6 +6,7 @@ import router from '@/router'
 import classNames from 'classnames'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
+import '@/filters'
 import Hex from '@/utils/Hex'
 Vue.use(ElementUI)
 Vue.prototype.hex = Hex
