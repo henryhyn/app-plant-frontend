@@ -3,14 +3,12 @@ import '@/style/main.less'
 import Vue from 'vue'
 import Layout from '@/pages/Layout'
 import router from '@/router'
-import classNames from 'classnames'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 import '@/filters'
 import Hex from '@/utils/Hex'
 Vue.use(ElementUI)
 Vue.prototype.hex = Hex
-Vue.prototype.cls = classNames
 
 const isDevMode = process.env.NODE_ENV !== 'production'
 Vue.config.devtools = isDevMode

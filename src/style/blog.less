@@ -7,6 +7,7 @@
 .hui-md-output {
   overflow: auto;
   padding: 8px;
+  line-height: 1.5;
 
   h1.hui-md-title {
     text-align: center;
@@ -14,8 +15,12 @@
 
   pre {
     padding: 8px;
-    background-color: lightgrey;
+    background-color: #f8f8f8;
     overflow-y: scroll;
+  }
+
+  code {
+    font-family: Courier, 'Courier New', monospace;
   }
 
   p {
@@ -25,6 +30,9 @@
   h2 {
     counter-increment: section;
     counter-reset: subsection;
+    margin: 45px 0 0.8em;
+    padding-bottom: 0.7em;
+    border-bottom: 1px solid #ddd;
 
     &:before {
       content: "§"counter(section)" ";

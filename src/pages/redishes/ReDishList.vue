@@ -91,6 +91,13 @@
       }
     },
 
+    watch: {
+      '$route': function (val) {
+        this.loadDataFromServer()
+        this.loadShopFromServer()
+      }
+    },
+
     methods: {
       empty () {
 
