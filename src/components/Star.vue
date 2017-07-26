@@ -1,26 +1,10 @@
 <template lang="pug">
-  span(:class='cls')
+  span(:class="['hui-star', 'rank'+rank]")
 </template>
 
 <script>
   export default {
-    props: ['rank'],
-
-    computed: {
-      cls: function () {
-        return {
-          'hui-star': true,
-          'rank0': this.rank === 0,
-          'rank10': this.rank === 10,
-          'rank20': this.rank === 20,
-          'rank30': this.rank === 30,
-          'rank35': this.rank === 35,
-          'rank40': this.rank === 40,
-          'rank45': this.rank === 45,
-          'rank50': this.rank === 50
-        }
-      }
-    }
+    props: ['rank']
   }
 </script>
 
