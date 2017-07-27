@@ -34,7 +34,7 @@ const config = {
     compress: true,
     proxy: {
       '/api/*': {
-        target: 'http://10.72.201.165:8080',
+        target: 'http://localhost:8080',
         secure: false
       }
     }

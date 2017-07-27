@@ -49,11 +49,17 @@
         el-button(@click='mergeVisible=false') 取消
         el-button(@click='merge' type='primary') 确定
     el-dialog(title='菜名批量认证' :visible.sync='batchDishNameVerifyVisible')
-      el-input(type='textarea' :rows='5' v-model='dishNames' placeholder='请输入待认证的菜名 (多个菜名用逗号或换行分隔)')
+      el-input(type='textarea' :rows='5' v-model='dishNames' placeholder='请输入待认证的菜名 (多个用逗号或换行分隔)')
       ol: li(v-for='item in filtByDishNames') {{ item.dishName }} <small class='gray'>({{ hex.toString(2+item.type,["下线","子菜","在线","认证"]) }})</small>
       div(slot='footer')
         el-button(@click='batchDishNameVerifyVisible=false') 取消
         el-button(@click='batchDishNameVerify' type='primary') 确定
+    el-dialog(title='连锁商户批量应用合并下线规则' :visible.sync='batchApplyVisible')
+      el-input(type='textarea' :rows='5' v-model='shopIds' @input='getShopList' placeholder='请输入连锁商户的点评 ShopID (多个用逗号或换行分隔)')
+      ol: li(v-for='item in shopList') {{ item.shopName }} <small class='gray'>({{ item.address }})</small>
+      div(slot='footer')
+        el-button(@click='batchApplyVisible=false') 取消
+        el-button(@click='batchApply' type='primary') 确定
     el-dialog(title='菜品详情' :visible.sync='splitVisible')
       dish-card(:data='masterDish', :onClick='empty')
       h4 子菜品
@@ -66,6 +72,7 @@
 </template>
 
 <script>
+  import _ from 'lodash'
   import Hex from '@/utils/Hex'
   import DishCard from '@/pages/dishes/DishCard'
   import ShopBanner from '@/pages/shops/ShopBanner'
@@ -75,9 +82,11 @@
       return {
         userName: localStorage.getItem('nlpMis'),
         shop: {},
+        shopList: [],
         dishCount: 0,
         keyword: null,
         dishNames: null,
+        shopIds: null,
         dishType: 0,
         masterDishId: null,
         batchHideVisible: false,
@@ -200,6 +209,20 @@
         })
       },
 
+      loadShopsFromServer (shopIds) {
+        const url = '/api/shops/findByShopIds'
+        Hex.get(url, {shopIds}, d => {
+          this.shopList = d
+        })
+      },
+
+      getShopList: _.debounce(function (e) {
+        if (Hex.validString(this.shopIds)) {
+          const shopIdSet = this.shopIds.replace(/[，、；;\t\r\n]/g, ',').split(',').map(i => i.trim()).filter(i => i.length > 0)
+          this.loadShopsFromServer(shopIdSet)
+        }
+      }, 300),
+
       merge () {
         const dishDTOs = this.filtByChecked.map(i => {
           const { id, dishName } = i
@@ -222,6 +245,18 @@
         Hex.post('/api/admin/batchHideDish', {dishDTOs, userName, method: 'batchHide'}, d => {
           this.loadDataFromServer()
           this.batchHideVisible = false
+        })
+      },
+
+      batchApply () {
+        const shopDTOs = this.shopList.map(i => {
+          const { shopId } = i
+          return { shopId }
+        })
+        const userName = this.userName
+        Hex.post('/api/admin/batchApply', {shopDTOs, userName, shopId: this.$route.params.shopId, method: 'batchApply'}, d => {
+          this.loadDataFromServer()
+          this.batchApplyVisible = false
         })
       },
 
