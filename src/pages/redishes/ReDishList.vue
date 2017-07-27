@@ -49,6 +49,11 @@
         el-button(@click='mergeVisible=false') 取消
         el-button(@click='merge' type='primary') 确定
     el-dialog(title='菜名批量认证' :visible.sync='batchDishNameVerifyVisible')
+      el-input(type='textarea' :rows='5' v-model='dishNames' placeholder='请输入待认证的菜名 (多个菜名用逗号或换行分隔)')
+      ol: li(v-for='item in filtByDishNames') {{ item.dishName }} <small class='gray'>({{ hex.toString(2+item.type,["下线","子菜","在线","认证"]) }})</small>
+      div(slot='footer')
+        el-button(@click='batchDishNameVerifyVisible=false') 取消
+        el-button(@click='batchDishNameVerify' type='primary') 确定
     el-dialog(title='菜品详情' :visible.sync='splitVisible')
       dish-card(:data='masterDish', :onClick='empty')
       h4 子菜品
@@ -72,6 +77,7 @@
         shop: {},
         dishCount: 0,
         keyword: null,
+        dishNames: null,
         dishType: 0,
         masterDishId: null,
         batchHideVisible: false,
@@ -98,6 +104,15 @@
         }
         this.dishCount = rs.length
         return rs
+      },
+
+      filtByDishNames () {
+        if (!Hex.validString(this.dishNames)) {
+          return []
+        }
+
+        const dishNameSet = this.dishNames.replace(/[，、；;\t\r\n]/g, ',').split(',').map(i => i.trim()).filter(i => i.length > 0)
+        return this.list.filter(i => dishNameSet.indexOf(i.dishName) >= 0)
       },
 
       hasVerify () {
@@ -207,6 +222,18 @@
         Hex.post('/api/admin/batchHideDish', {dishDTOs, userName, method: 'batchHide'}, d => {
           this.loadDataFromServer()
           this.batchHideVisible = false
+        })
+      },
+
+      batchDishNameVerify () {
+        const dishDTOs = this.filtByDishNames.map(i => {
+          const { id, dishName } = i
+          return { id, dishName }
+        })
+        const userName = this.userName
+        Hex.post('/api/admin/batchVerifyDish', {shopId: this.$route.params.shopId, dishDTOs, userName, method: 'batchVerify'}, d => {
+          this.loadDataFromServer()
+          this.batchDishNameVerifyVisible = false
         })
       },
 
