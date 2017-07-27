@@ -9,11 +9,13 @@
           p 推荐菜
       el-col(:span='12')
         .vskip
-          el-button(@click='batchHideHandler' type='primary' :disabled='!hasChecked || hasNegtiveChecked') 批量下线
-          el-button(@click='mergeHandler' type='primary' :disabled='!hasChecked || hasNegtiveChecked') 在线合并
-          el-button(@click='batchVerifyHandler' type='danger' :disabled='!hasChecked') 恢复并认证
+          el-button(@click='batchHideVisible=true' type='primary' :disabled='!hasChecked || hasNegtiveChecked') 批量下线
+          el-button(@click='mergeVisible=true' type='primary' :disabled='!hasChecked || hasNegtiveChecked') 在线合并
+          el-button(@click='batchVerifyVisible=true' type='danger' :disabled='!hasChecked') 恢复并认证
+          el-button(@click='batchDishNameVerifyVisible=true' type='danger') 批量认证
+          el-button(@click='batchApplyVisible=true' type='danger' :disabled='!hasVerify') 连锁应用
         ul.list-inline
-          li(v-for='item in filtByChecked') <el-checkbox v-model='item.checked'/> {{ item.dishName }} <small>({{ hex.toString(2+item.type,["下线","子菜","在线","认证"]) }})</small>
+          li(v-for='item in filtByChecked') <el-checkbox v-model='item.checked'/> {{ item.dishName }} <small class='gray'>({{ hex.toString(2+item.type,["下线","子菜","在线","认证"]) }})</small>
     el-row.vskipp(:gutter=16)
       el-col(:span='6')
         el-input(v-model='keyword' placeholder='推荐菜名字')
@@ -30,22 +32,23 @@
       el-col.vskipp(:xs='24' :sm='12' :md='8' :lg='6' :key='item.id' v-for='item in filtByKeyword')
         dish-card(:data='item' :onClick='handleClick.bind(this, item)')
     el-dialog(title='批量下线' :visible.sync='batchHideVisible')
-      ol: li(v-for='item in opList') {{ item.dishName }}
+      ol: li(v-for='item in filtByChecked') {{ item.dishName }}
       div(slot='footer')
         el-button(@click='batchHideVisible=false') 取消
         el-button(@click='batchHide' type='primary') 确定
     el-dialog(title='菜品认证' :visible.sync='batchVerifyVisible')
-      ol: li(v-for='item in opList') {{ item.dishName }}
+      ol: li(v-for='item in filtByChecked') {{ item.dishName }}
       div(slot='footer')
         el-button(@click='batchVerifyVisible=false') 取消
         el-button(@click='batchVerify' type='primary') 确定
     el-dialog(title='在线合并' :visible.sync='mergeVisible')
       p.gray 请选择主菜品:
-      ul.list-unstyled: li(v-for='item in opList')
+      ul.list-unstyled: li(v-for='item in filtByChecked')
         el-radio(v-model='masterDishId' :label='item.id') {{ item.dishName }} ({{item.recommendCount}}人推荐 <span v-if='hex.validNumber(item.price)'>￥{{item.price}}</span>)
       div(slot='footer')
         el-button(@click='mergeVisible=false') 取消
         el-button(@click='merge' type='primary') 确定
+    el-dialog(title='菜名批量认证' :visible.sync='batchDishNameVerifyVisible')
     el-dialog(title='菜品详情' :visible.sync='splitVisible')
       dish-card(:data='masterDish', :onClick='empty')
       h4 子菜品
@@ -73,11 +76,12 @@
         masterDishId: null,
         batchHideVisible: false,
         batchVerifyVisible: false,
+        batchDishNameVerifyVisible: false,
+        batchApplyVisible: false,
         mergeVisible: false,
         splitVisible: false,
         masterDish: {},
         childDishList: [],
-        opList: [],
         list: []
       }
     },
@@ -94,6 +98,10 @@
         }
         this.dishCount = rs.length
         return rs
+      },
+
+      hasVerify () {
+        return this.list.filter(i => i.type === 1).length > 0
       },
 
       filtByChecked () {
@@ -177,12 +185,8 @@
         })
       },
 
-      opListFilter () {
-        this.opList = this.list.filter(i => i.checked)
-      },
-
       merge () {
-        const dishDTOs = this.opList.map(i => {
+        const dishDTOs = this.filtByChecked.map(i => {
           const { id, dishName } = i
           return { id, dishName }
         })
@@ -194,13 +198,8 @@
         })
       },
 
-      mergeHandler () {
-        this.opListFilter()
-        this.mergeVisible = true
-      },
-
       batchHide () {
-        const dishDTOs = this.opList.map(i => {
+        const dishDTOs = this.filtByChecked.map(i => {
           const { id, dishName } = i
           return { id, dishName }
         })
@@ -212,7 +211,7 @@
       },
 
       batchVerify () {
-        const dishDTOs = this.opList.map(i => {
+        const dishDTOs = this.filtByChecked.map(i => {
           const { id, dishName } = i
           return { id, dishName }
         })
@@ -221,16 +220,6 @@
           this.loadDataFromServer()
           this.batchVerifyVisible = false
         })
-      },
-
-      batchHideHandler () {
-        this.opListFilter()
-        this.batchHideVisible = true
-      },
-
-      batchVerifyHandler () {
-        this.opListFilter()
-        this.batchVerifyVisible = true
       }
     },
 
