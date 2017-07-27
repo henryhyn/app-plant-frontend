@@ -13,7 +13,7 @@
           el-button(@click='mergeHandler' type='primary' :disabled='!hasChecked || hasNegtiveChecked') 在线合并
           el-button(@click='batchVerifyHandler' type='danger' :disabled='!hasChecked') 恢复并认证
         ul.list-inline
-          li(v-for='item in filtByChecked') <el-checkbox v-model='item.checked'/> {{ item.dishName + '(' + hex.toString(2+item.type,["下线","子菜","在线","认证"]) + ')' }}
+          li(v-for='item in filtByChecked') <el-checkbox v-model='item.checked'/> {{ item.dishName }} <small>({{ hex.toString(2+item.type,["下线","子菜","在线","认证"]) }})</small>
     el-row.vskipp(:gutter=16)
       el-col(:span='6')
         el-input(v-model='keyword' placeholder='推荐菜名字')
