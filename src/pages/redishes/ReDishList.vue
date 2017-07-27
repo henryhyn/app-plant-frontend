@@ -7,19 +7,25 @@
         el-card.hui-count(:body-style='{"text-align": "center"}')
           p.huge <strong>{{dishCount}}</strong> 道
           p 推荐菜
-    .vskip
-      el-button(@click='batchHideHandler' type='danger') 批量下线
-      el-button(@click='batchVerifyHandler' type='danger') 批量恢复
-      el-button(@click='mergeHandler' type='danger') 在线合并
-      span.hskip
-      el-button-group
-        el-button(:type="dishType===100 ? 'primary' : 'default'" @click='dishType=100') 全部
-        el-button(:type="dishType===0 ? 'primary' : 'default'" @click='dishType=0') 在线
-        el-button(:type="dishType===-1 ? 'primary' : 'default'" @click='dishType=-1') 子菜
-        el-button(:type="dishType===-2 ? 'primary' : 'default'" @click='dishType=-2') 下线
-        el-button(:type="dishType===1 ? 'primary' : 'default'" @click='dishType=1') 认证
-      .pull-right
+      el-col(:span='12')
+        .vskip
+          el-button(@click='batchHideHandler' type='primary' :disabled='!hasChecked || hasNegtiveChecked') 批量下线
+          el-button(@click='mergeHandler' type='primary' :disabled='!hasChecked || hasNegtiveChecked') 在线合并
+          el-button(@click='batchVerifyHandler' type='danger' :disabled='!hasChecked') 恢复并认证
+        ul.list-inline
+          li(v-for='item in filtByChecked') <el-checkbox v-model='item.checked'/> {{ item.dishName + '(' + hex.toString(2+item.type,["下线","子菜","在线","认证"]) + ')' }}
+    el-row.vskipp(:gutter=16)
+      el-col(:span='6')
         el-input(v-model='keyword' placeholder='推荐菜名字')
+      el-col(:span='18')
+        el-button-group.hskip
+          el-button(:type="dishType===100 ? 'primary' : 'default'" @click='dishType=100') 全部
+          el-button(:type="dishType===0 ? 'primary' : 'default'" @click='dishType=0') 在线
+          el-button(:type="dishType===-1 ? 'primary' : 'default'" @click='dishType=-1') 子菜
+          el-button(:type="dishType===-2 ? 'primary' : 'default'" @click='dishType=-2') 下线
+          el-button(:type="dishType===1 ? 'primary' : 'default'" @click='dishType=1') 认证
+        el-button-group
+          el-button(@click='reset') 重置刷新
     el-row
       el-col.vskipp(:xs='24' :sm='12' :md='8' :lg='6' :key='item.id' v-for='item in filtByKeyword')
         dish-card(:data='item' :onClick='handleClick.bind(this, item)')
@@ -88,6 +94,18 @@
         }
         this.dishCount = rs.length
         return rs
+      },
+
+      filtByChecked () {
+        return this.list.filter(i => i.checked)
+      },
+
+      hasChecked () {
+        return this.filtByChecked.length > 0
+      },
+
+      hasNegtiveChecked () {
+        return this.filtByChecked.filter(i => i.type < 0).length > 0
       }
     },
 
@@ -124,6 +142,12 @@
           this.loadDataFromServer()
           this.splitVisible = false
         })
+      },
+
+      reset () {
+        this.keyword = null
+        this.dishType = 0
+        this.loadDataFromServer()
       },
 
       loadChildDishFromServer (dishId) {
